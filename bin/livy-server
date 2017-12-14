@@ -18,7 +18,7 @@
 # Runs Livy server.
 
 
-usage="Usage: livy-server (start|stop|status)"
+usage="Usage: livy-server (start|stop|status) <optional_id>"
 
 export LIVY_HOME=$(cd $(dirname $0)/.. && pwd)
 LIVY_CONF_DIR=${LIVY_CONF_DIR:-"$LIVY_HOME/conf"}
@@ -41,6 +41,10 @@ else
 fi
 
 LIVY_IDENT_STRING=${LIVY_IDENT_STRING:-"$USER"}
+if [[ "$#" > 1 ]]
+  then
+  LIVY_IDENT_STRING="$LIVY_IDENT_STRING-$2"
+fi
 LIVY_PID_DIR=${LIVY_PID_DIR:-"/tmp"}
 LIVY_MAX_LOG_FILES=${LIVY_MAX_LOG_FILES:-5}
 pid="$LIVY_PID_DIR/livy-$LIVY_IDENT_STRING-server.pid"
